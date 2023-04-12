@@ -1,3 +1,3 @@
 # week10
 Hello Universe
-This is ACS730 Lab8
+This is ACS730 Lab 8
