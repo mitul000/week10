@@ -38,6 +38,30 @@ jobs:
         conclusion: ${{ job.status }}
         output: |
           {"summary":"${{ steps.test.outputs.summary }}"}
+          
+name: Create Outputs
+on:
+  push:
+    branches:
+      - main
+jobs:
+  create_outputs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: "1.0.3"
+      - name: Terraform Apply
+        run: |
+          terraform init
+          terraform apply -auto-approve
+      - name: Create Outputs
+        run: |
+          echo "::set-output name=my_output::$(terraform output my_output)"
+
 
 #     steps:
 #       - name: Clone repo
